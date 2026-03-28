@@ -38,7 +38,7 @@ from openai import OpenAI
 
 client = OpenAI(base_url=f"{BASE_URL}/v1", api_key="not-needed")
 resp = client.chat.completions.create(
-    model="Qwen/Qwen3.5-35B-A3B-FP8",
+    model="Qwen/Qwen3.5-122B-A10B-FP8",
     messages=[{"role": "user", "content": "Hello"}],
 )
 ```
@@ -49,7 +49,9 @@ Interactive API docs at `{BASE_URL}/docs`.
 
 | Model | Type | VRAM (approx) | GPU | Cost/hr | Notes |
 |-------|------|---------------|-----|---------|-------|
-| `Qwen/Qwen3.5-35B-A3B-FP8` | MoE | ~36GB | H100 | ~$3.95 | **Default.** 3B active params = fast inference |
+| `Qwen/Qwen3.5-122B-A10B-FP8` | MoE | ~125GB | 2x H100 | ~$7.90 | **Default.** 10B active params, strong quality |
+| `Qwen/Qwen3.5-397B-A17B-FP8` | MoE | ~400GB | 4x H100 | ~$15.80 | Flagship. Best quality |
+| `Qwen/Qwen3.5-35B-A3B-FP8` | MoE | ~36GB | H100 | ~$3.95 | Best throughput/cost ratio |
 | `Qwen/Qwen3.5-27B-FP8` | Dense | ~28GB | H100 or L40S | $1.95-$3.95 | Strong quality, cheaper on L40S |
 | `Qwen/Qwen3.5-9B` | Dense | ~20GB (bf16) | L40S | ~$1.95 | Budget option |
 
