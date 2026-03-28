@@ -73,9 +73,9 @@ vllm_cache_vol = modal.Volume.from_name("vllm-cache", create_if_missing=True)
 
 app = modal.App("qwen-serving")
 
-# Set True for faster cold starts (skips torch compile / cuda graph capture).
-# Set False for better generation throughput once warm.
-FAST_BOOT = True
+# CUDA graphs reduce per-token latency significantly once warm.
+# Cold start is longer (~5-8 min extra for graph capture), but generation is faster.
+FAST_BOOT = False
 
 
 @app.function(
@@ -110,6 +110,13 @@ def serve():
         "--language-model-only",  # text-only mode, saves VRAM; remove for multimodal
         "--reasoning-parser",
         "qwen3",  # enables <think> tag parsing for thinking mode
+        "--kv-cache-dtype",
+        "fp8",  # halves KV cache memory vs bf16
+        "--gpu-memory-utilization",
+        "0.95",  # use more VRAM (default 0.9)
+        "--enable-prefix-caching",  # reuse KV cache for repeated prefixes (e.g. system prompt)
+        "--gdn-prefill-backend",
+        "triton",  # avoids ~5 min FlashInfer JIT compile on cold start
         "--uvicorn-log-level=info",
     ]
 
