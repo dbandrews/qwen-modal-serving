@@ -81,7 +81,7 @@ FAST_BOOT = False
 @app.function(
     image=vllm_image,
     gpu=f"{GPU_TYPE}:{N_GPU}",
-    scaledown_window=15 * MINUTES,
+    scaledown_window=5 * MINUTES,
     timeout=10 * MINUTES,
     volumes={
         "/root/.cache/huggingface": hf_cache_vol,
