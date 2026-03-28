@@ -115,6 +115,9 @@ def serve():
         "--gpu-memory-utilization",
         "0.95",  # use more VRAM (default 0.9)
         "--enable-prefix-caching",  # reuse KV cache for repeated prefixes (e.g. system prompt)
+        "--enable-auto-tool-choice",  # allow tool_choice="auto" in chat completions
+        "--tool-call-parser",
+        "qwen3_coder",  # parse Qwen3.5 tool call format
         "--gdn-prefill-backend",
         "triton",  # avoids ~5 min FlashInfer JIT compile on cold start
         "--uvicorn-log-level=info",
