@@ -25,7 +25,7 @@ if not BASE_URL:
 # Modal endpoints don't require an API key, but the OpenAI SDK needs one set
 client = OpenAI(base_url=f"{BASE_URL}/v1", api_key="not-needed")
 
-MODEL = "Qwen/Qwen3.5-122B-A10B-FP8"
+MODEL = "Qwen/Qwen3.5-35B-A3B-FP8"
 
 prompt = sys.argv[1] if len(sys.argv) > 1 else "Explain mixture-of-experts in 3 sentences."
 

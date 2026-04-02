@@ -16,12 +16,12 @@ import aiohttp
 import modal
 
 # --- Model Configuration ---
-# Qwen3.5-122B-A10B-FP8: MoE model, 122B total / 10B active params.
-# Strong quality with efficient sparse activation. Requires 2x H100 (80GB) with FP8.
-MODEL_NAME = "Qwen/Qwen3.5-122B-A10B-FP8"
+# Qwen3.5-35B-A3B-FP8: MoE, 35B total / 3B active. Best throughput/cost ratio.
+# Fits on a single A100-80GB with FP8 quantization.
+MODEL_NAME = "Qwen/Qwen3.5-35B-A3B-FP8"
 MODEL_REVISION = None  # pin a commit hash for reproducibility, or None for latest
-N_GPU = 2
-GPU_TYPE = "H100"
+N_GPU = 1
+GPU_TYPE = "A100-80GB"
 MAX_MODEL_LEN = 32768  # 32K context; increase if you need longer (up to 262144 native)
 
 # --- Alternative configurations (uncomment one block to switch) ---
@@ -114,6 +114,8 @@ def serve():
         "fp8",  # halves KV cache memory vs bf16
         "--gpu-memory-utilization",
         "0.95",  # use more VRAM (default 0.9)
+        "--max-num-batched-tokens",
+        "4192",  # must be >= 2096 (attention block size) for Mamba cache align mode
         "--enable-prefix-caching",  # reuse KV cache for repeated prefixes (e.g. system prompt)
         "--enable-auto-tool-choice",  # allow tool_choice="auto" in chat completions
         "--tool-call-parser",
