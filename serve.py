@@ -164,6 +164,8 @@ class Inference:
             str(MAX_INPUTS),
             "--tool-call-parser",
             "qwen3_coder",  # Qwen 3.5 tool calling format
+            "--reasoning-parser",
+            "qwen3",  # parse <think> blocks into reasoning_content, not content
             "--enable-metrics",
             "--enable-memory-saver",  # enable offload for snapshotting
             "--enable-weights-cpu-backup",  # enable offload for snapshotting
