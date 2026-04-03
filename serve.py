@@ -163,7 +163,7 @@ class Inference:
             "--max-running-requests",
             str(MAX_INPUTS),
             "--tool-call-parser",
-            "qwen",  # Qwen tool calling format
+            "qwen3_coder",  # Qwen 3.5 tool calling format
             "--enable-metrics",
             "--enable-memory-saver",  # enable offload for snapshotting
             "--enable-weights-cpu-backup",  # enable offload for snapshotting
